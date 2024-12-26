@@ -381,5 +381,3 @@ public class ScrapeIndeed {
 	}
 	
 }
-
-//sneaky sneaky
