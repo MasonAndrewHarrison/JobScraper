@@ -128,7 +128,7 @@ public class ScrapeIndeed {
 			try {
 				return getTextByXPath("//*[@id=\"jobDescriptionText\"]");
 			} catch(NoSuchElementException e2) {
-				return null; 
+				return null;
 			}
 		}
 	}
@@ -228,7 +228,8 @@ public class ScrapeIndeed {
 		String details = getDetails();
 		String description = getDescription();
 		//String location = getLocation();
-		return new JobApplication(jobID, description, details, benefits, null);
+		//return new JobApplication(jobID, description, details, benefits, null);
+		return null;
 	}
 	
 	/**
