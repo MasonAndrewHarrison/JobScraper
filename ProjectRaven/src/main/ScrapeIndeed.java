@@ -35,7 +35,7 @@ public class ScrapeIndeed {
 	private int currentPage;
 	
 	ScrapeIndeed(Boolean isHeadless, String city, String state, String search){ 
-		ChromeOptions options = new ChromeOptions();
+		ChromeOptions options = new ChromeOptions(); 
 		currentPage = 1;
 		if(isHeadless) {
 			options.addArguments("--headless=new");
@@ -98,7 +98,7 @@ public class ScrapeIndeed {
 		try {
 			//return getListFromElement("/html/body/main/div/div[2]/div/div[5]/div/div[2]/div/div/div[2]/div[2]/div[2]/div/div[2]/div[7]/div[1]/div/span/ul");
 			return getTextByXPath("/html/body/main/div/div[2]/div/div[5]/div/div[2]/div/div/div[2]/div[2]/div[2]/div/div[2]/div[7]/div[1]/div/span/ul");
-		} catch(NoSuchElementException e1) {
+		} catch(NoSuchElementException e1) { 
 			try { 
 				//return getListFromElement("//*[@id=\"benefits\"]");
 				return getTextByXPath("//*[@id=\"benefits\"]");
@@ -263,7 +263,7 @@ public class ScrapeIndeed {
 				return jobList;
 			}
 		}
-		return jobList;		
+		return jobList;	
 	}
 	
 	/**
