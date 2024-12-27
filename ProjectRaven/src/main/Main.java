@@ -1,11 +1,19 @@
 package main;
 
 public class Main {
-    public static void main(String[] args) throws JobsToolsNotFoundExecption, InterruptedException {
-		
-			ScrapeGoogleJobs scraper = new ScrapeGoogleJobs(false, "Aerospace Engineering");
+    @SuppressWarnings("null")
+	public static void main(String[] args){
 			
-			//TODO fix "SocketException"
-			scraper.close();
+    	ScrapeGoogleJobs scraper = null;
+    	try {
+			scraper = new ScrapeGoogleJobs(false, "Aerospace Engineering");
+		} catch (JobsToolsNotFoundExecption | GenerateJobListingExeception e) {
+			e.printStackTrace();
+		} finally {
+			//scraper.close();
+		}
+			
+    	
+    	
     }
 }

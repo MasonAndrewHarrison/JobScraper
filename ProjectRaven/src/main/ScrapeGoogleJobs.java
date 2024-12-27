@@ -1,10 +1,14 @@
 package main;
 
+import java.awt.AWTException;
+import java.awt.Robot;
+import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.PageLoadStrategy;
 import org.openqa.selenium.WebDriver;
@@ -18,7 +22,7 @@ public class ScrapeGoogleJobs {
 	private WebDriver driver;
 	private ArrayList<WebElement> jobElements;
 	
-	ScrapeGoogleJobs (Boolean isHeadless, String searchInput) throws JobsToolsNotFoundExecption{
+	ScrapeGoogleJobs (Boolean isHeadless, String searchInput) throws JobsToolsNotFoundExecption, GenerateJobListingExeception{
 		searchInput = searchInput + " Jobs";
 		ChromeOptions options = new ChromeOptions();
 		
@@ -37,10 +41,21 @@ public class ScrapeGoogleJobs {
 	
 		searcher(searchInput);
 		jobListingsOnly();
-		jobElements = generateJobListings();
+		
+		try {
+			jobElements = generateJobListings();
+		} catch (InterruptedException | AWTException e) {
+			throw new GenerateJobListingExeception();
+		}
+		
 	}
 	
 	public void close() {
+		try {
+			Thread.sleep(100);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 		driver.close();
 	}
 	
@@ -48,13 +63,13 @@ public class ScrapeGoogleJobs {
 		driver.navigate().back();
 	}
 	
-	public void searcher(String searchInput){
+	private void searcher(String searchInput){
 		WebElement searchBarInput = driver.findElement(By.xpath("//*[@id=\"APjFqb\"]"));
 		//The "\n" at the end acts as an enter for the search bar
 		searchBarInput.sendKeys(searchInput + "\n");
 	}
 	
-	public void jobListingsOnly() throws JobsToolsNotFoundExecption {
+	private void jobListingsOnly() throws JobsToolsNotFoundExecption {
 		String toolsXpath = "/html/body/div[3]/div/div[4]/div/div/div/div/div[1]/div/div/div/div[1]/div[1]";
 		String toolsXpathBackup = "/html/body/div[3]/div/div[3]/div/div/div/div/div/div/div[1]";
 		String[] tools = {""};
@@ -94,10 +109,19 @@ public class ScrapeGoogleJobs {
 		}
 	}
 	
-	public ArrayList<WebElement> generateJobListings() {
+	public ArrayList<WebElement> generateJobListings() throws InterruptedException, AWTException {
 		
-		WebElement jobListing = driver.findElement(By.xpath("//*[@id=\"center_col\"]"));
-			System.out.println(jobListing.getText());
+		//Thread.sleep(1000);
+		//JavascriptExecutor scriptExecutor = (JavascriptExecutor)driver;
+		//scriptExecutor.executeScript("window.scrollBy(0,2000)");
+		//Thread.sleep(300);
+		
+		//WebElement jobListing = driver.findElement(By.xpath("//*[@id=\"center_col\"]"));
+		//WebElement jobListing = driver.findElement(By.xpath("//*[@id=\"w7tRq\"]"));
+		List<WebElement> jobListing = driver.findElements(By.xpath("/html/body/div[3]/div/div[13]/div/div/div[2]/div[2]/div/div/div/div/div/div/div/div[3]/div/div/div/div/infinity-scrolling"));
+		for(WebElement e: jobListing) {
+			System.out.println(e.getText());
+		}
 		return null;
 	}
 	
