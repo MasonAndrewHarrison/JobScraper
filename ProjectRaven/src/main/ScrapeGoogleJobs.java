@@ -2,6 +2,7 @@ package main;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
@@ -10,10 +11,12 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.support.ui.Wait;
 
 public class ScrapeGoogleJobs {
 	
 	private WebDriver driver;
+	private ArrayList<WebElement> jobElements;
 	
 	ScrapeGoogleJobs (Boolean isHeadless, String searchInput) throws JobsToolsNotFoundExecption{
 		searchInput = searchInput + " Jobs";
@@ -23,7 +26,7 @@ public class ScrapeGoogleJobs {
 			options.addArguments("--headless=new");
 		}
 		
-		options.setPageLoadStrategy(PageLoadStrategy.NORMAL);
+		options.setPageLoadStrategy(PageLoadStrategy.EAGER);
     	options.addArguments("--window-size=1920,1080");  
     	String userAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36";;
     	options.addArguments("user-agent=/" + userAgent);
@@ -34,10 +37,15 @@ public class ScrapeGoogleJobs {
 	
 		searcher(searchInput);
 		jobListingsOnly();
+		jobElements = generateJobListings();
 	}
 	
 	public void close() {
 		driver.close();
+	}
+	
+	public void navigateBack() {
+		driver.navigate().back();
 	}
 	
 	public void searcher(String searchInput){
@@ -86,13 +94,21 @@ public class ScrapeGoogleJobs {
 		}
 	}
 	
+	public ArrayList<WebElement> generateJobListings() {
+		
+		WebElement jobListing = driver.findElement(By.xpath("//*[@id=\"center_col\"]"));
+			System.out.println(jobListing.getText());
+		return null;
+	}
+	
 	public void clickByXpath(String xpath) {
 		driver.findElement(By.xpath(xpath)).click();
 	}
 	
+	//TODO doesn't work past 10. Make it generate the clickable job elements first.
 	public void selectJobListing(int index) {
-		String jobListingXpath = "/html/body/div[3]/div/div[13]/div/div/div[2]/div[2]/div/div/div/div/div/div/div/div[3]/div/div/div/div/infinity-scrolling/div[1]/div[1]/div[" + index + "]/div[1]/div/div/div/a";
-		clickByXpath(jobListingXpath);
+		//String jobListingXpath = "/html/body/div[3]/div/div[13]/div/div/div[2]/div[2]/div/div/div/div/div/div/div/div[3]/div/div/div/div/infinity-scrolling/div[1]/div[1]/div[" + index + "]/div[1]/div/div/div/a";
+		//clickByXpath(jobListingXpath);
 	}
 	
 	public String scrapeLink(int timeDelay) throws InterruptedException {
