@@ -17,6 +17,9 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.ui.Wait;
 
+import exceptionPackage.GenerateJobListingExeception;
+import exceptionPackage.JobsToolsNotFoundExecption;
+
 public class ScrapeGoogleJobs {
 	
 	private WebDriver driver;

@@ -1,4 +1,4 @@
-package main;
+package exceptionPackage;
 
 public class ButtonNotFoundException extends Exception{ 
 

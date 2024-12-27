@@ -23,6 +23,8 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 
+import exceptionPackage.ButtonNotFoundException;
+import exceptionPackage.CloudFlareCaughtYouException;
 import lombok.Data;
 
 @Data
@@ -32,7 +34,7 @@ public class ScrapeIndeed {
 	private String city;
 	private String state;
 	private String search;
-	private int currentPage;
+	private int currentPage; 
 	
 	ScrapeIndeed(Boolean isHeadless, String city, String state, String search){ 
 		ChromeOptions options = new ChromeOptions(); 
