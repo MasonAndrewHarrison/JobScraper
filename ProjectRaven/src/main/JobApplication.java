@@ -3,10 +3,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public record JobApplication(
-		ArrayList<String> jobURLs, 
+		String jobLink, 
 		String company, 
 		String location, 
-		int daysAgo, 
+		String dateUpLoaded, 
 		ArrayList<String> qualifications, 
 		ArrayList<String> benefits, 
 		ArrayList<String> responsibilities, 
