@@ -6,7 +6,7 @@ import exceptionPackage.JobsToolsNotFoundExecption;
 public class Main {
 	public static void main(String[] args){
 	
-    	ScrapeGoogleJobs scraper = null;
+    	ScrapeGoogleJobs scraper = null; 
     	try {
 			scraper = new ScrapeGoogleJobs(false, "Aerospace Engineering");
 		} catch (JobsToolsNotFoundExecption | GenerateJobListingExeception e) {
