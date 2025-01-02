@@ -1,29 +1,28 @@
 package main;
 
 import java.awt.AWTException;
-import java.awt.Robot;
-import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.PageLoadStrategy;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
-import org.openqa.selenium.support.ui.Wait;
 
 import exceptionPackage.GenerateJobListingExeception;
 import exceptionPackage.JobsToolsNotFoundExecption;
+import lombok.Data;
 
+@Data
 public class ScrapeGoogleJobs {
 	
 	private WebDriver driver;
 	private ArrayList<WebElement> jobElements;
+	private ArrayList<JobApplication> jobListings;
 	
 	ScrapeGoogleJobs (Boolean isHeadless, String searchInput) throws JobsToolsNotFoundExecption, GenerateJobListingExeception{
 		searchInput = searchInput + " Jobs";
@@ -46,7 +45,7 @@ public class ScrapeGoogleJobs {
 		jobListingsOnly();
 		
 		try {
-			jobElements = generateJobListings();
+			generateJobListings();
 		} catch (InterruptedException | AWTException e) {
 			throw new GenerateJobListingExeception();
 		}
